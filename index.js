@@ -2,6 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const articlesControllers = require('./controllers/articles');
 const commentsController = require('./controllers/comments');
+const getController = require('./controllers/get');
 
 
 let LogPath = "./Logs/log.txt";
@@ -18,7 +19,13 @@ const handlers = {
     '/api/articles/delete': articlesControllers.deleteArt,
     '/api/comments/create': commentsController.create,
     '/api/comments/deleteCom': commentsController.deleteCom,
-    '/api/logs':getJSONlogs
+    '/api/logs':getJSONlogs,
+    '/' : getController.indexx,
+    '/index.html' :getController.indexx,
+    '/app.js' : getController.app,
+    '/form.html' : getController.formm,
+    '/form.js' : getController.formjs,
+    '/site.css' : getController.css
 };
 
 function Log(data) {

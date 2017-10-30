@@ -1,5 +1,0 @@
-{
-	"sortField" : "id",
-	"sortOrder" : "desc",
-	"includeDeps" : true
-}
