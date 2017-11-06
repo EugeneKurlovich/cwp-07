@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="form.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>New article form</title>
+</head>
+<body>
+    <div class="container">
+        <form id="article-form" action="/api/articles/create" method="post">
+            <div >
+                <label>Article title</label>
+                <input type="text"  id="title" name="title">
+            </div>
+            <div >
+                <label>Text</label>
+                <input type="text"  id="text" name="text" >
+            </div>
+            <div>
+                <label>Date</label>
+                <input type="text"  id="date" name="date" >
+            </div>
+            <div >
+                <label>Author</label>
+                <input type="text"  id="author" name="author">
+            </div>
+            <button type="submit" >Submit</button>
+        </form>
+    </div>
+</body>
+</html>
