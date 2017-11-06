@@ -1,31 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<script src="form.js"></script>
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>New article form</title>
+    <title>Create</title>
+    <meta charset="utf-8">
+    <script src="jquery.min.js"></script>
 </head>
+
 <body>
-    <div class="container">
-        <form id="article-form" action="/api/articles/create" method="post">
-            <div >
-                <label>Article title</label>
-                <input type="text"  id="title" name="title">
-            </div>
-            <div >
-                <label>Text</label>
-                <input type="text"  id="text" name="text" >
-            </div>
-            <div>
-                <label>Date</label>
-                <input type="text"  id="date" name="date" >
-            </div>
-            <div >
-                <label>Author</label>
-                <input type="text"  id="author" name="author">
-            </div>
-            <button type="submit" >Submit</button>
-        </form>
-    </div>
+    <input type="text" id="Author">Author</input>
+    <br />
+    <input type="text" id="Title">Title</input>
+    <br />
+    <input type="text" id="Text">Text</input>
+    <br />
+    <input type="button" onclick="createNewArticle()" value='Add new article'></input>
 </body>
+<script>
+    function createNewArticle() {
+        let auth = document.getElementById('Author').value;
+        let titl = document.getElementById('Title').value;
+        let txt = document.getElementById('Text').value;
+        const dat = new Date().toString();
+        let articleId = 0;
+
+        let obj = JSON.stringify({id : articleId, author: auth, title: titl, text: txt, date: dat });
+        
+        $.post("/api/articles/create", obj, (data) => {
+            alert('Create successful');
+        });
+    }
+
+</script>
+
 </html>
