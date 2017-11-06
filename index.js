@@ -18,7 +18,7 @@ const handlers = {
 
     '/' : getController.indexx,
     '/index.html' :getController.indexx,
-    '/app.js' : getController.app,
+    '/index.js' : getController.app,
     '/form.html' : getController.formm,
     '/form.js' : getController.formjs,
     '/site.css' : getController.css
