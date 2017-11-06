@@ -1,0 +1,32 @@
+<html lang="en">
+<script src="./index.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Articles</title>
+</head>
+<body>
+<div class="container">
+    <nav >
+        <h2>Articles</h2>
+        <select  id="field-selector">
+            <option value="id">id</option>
+            <option value="title">Title</option>
+            <option value="text">Text</option>
+            <option value="date" selected>Date</option>
+            <option value="author">Author</option>
+        </select>
+        <select  id="order-selector">
+            <option value="asc">Ascending</option>
+            <option value="desc" selected>Descending</option>
+        </select>
+        <button type="button" >Sort</button>
+    </nav>
+    <div id="articles">
+
+    </div>
+    <div id="pagination">
+
+    </div>
+</div>
+</body>
+</html>
