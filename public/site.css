@@ -1,0 +1,10 @@
+#article
+{
+    margin: auto;
+    width: 400px;
+    background-color: aqua;
+    
+    text-align: left;
+    border: 1px solid red;
+    border-radius: 5px;
+}
