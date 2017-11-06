@@ -12,8 +12,7 @@ contentTypes = {
 
 function  getResponse (contentType, body) {
     return {
-        "contentType" : contentType,
-        "body"        : body
+        "contentType" : contentType        
     }
 };
 
