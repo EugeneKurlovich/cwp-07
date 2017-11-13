@@ -1,33 +1,44 @@
 const http = require('http');
+const fs = require('fs');
 
-const articlesControllers = require('./controllers/articles');
-const commentsController = require('./controllers/comments');
-const getController = require('./controllers/get');
+const articles = require("./articles.json");
+const readAll = require('./readAll.js');
+const read = require('./read.js')
+const createArticle = require('./createArticle.js');
+const updateArticle = require('./updateArticle.js');
+const deleteArticle = require('./deleteArticle.js');
+const createComment = require('./createComment');
+const deleteComment = require('./deleteComment');
+const logs = require('./logs.js');
+const html = require('./html.js');
+const js = require('./js.js');
+const css = require('./css.js');
 
 const hostname = '127.0.0.1';
 const port = 3000;
 
 const handlers = {
-    '/api/articles/readAll': articlesControllers.readAll,
-    '/api/articles/read': articlesControllers.read,
-    '/api/articles/create': articlesControllers.create,
-    '/api/articles/update': articlesControllers.update,
-    '/api/articles/delete': articlesControllers.deleteArt,
-    '/api/comments/create': commentsController.create,
-    '/api/comments/deleteCom': commentsController.deleteCom,
-
-    '/' : getController.indexx,
-    '/index.html' :getController.indexx,
-    '/index.js' : getController.app,
-    '/form.html' : getController.formm,
-    '/form.js' : getController.formjs,
-    '/site.css' : getController.css
-};
+    '/api/articles/readall': readAll.readAll,
+    '/api/articles/read' : read.read,
+    '/api/articles/create' : createArticle.createArticle,
+    '/api/articles/update' : updateArticle.updateArticle,
+    '/api/articles/delete' : deleteArticle.deleteArticle,
+    '/api/comments/create' : createComment.createComment,
+    '/api/comments/delete' : deleteComment.deleteComment,
+    '/api/logs': logs.logs,
+//****************************
+    '/' : html.getIndexHtml,
+    '/index.html' : html.getIndexHtml,
+    '/form.html' : html.getFormHtml,
+    '/app.js' : js.appJS,
+    '/form.js' : js.formJS,
+    '/site.css' : css.siteCSS
+}
 
 const server = http.createServer((req, res) => {
     parseBodyJson(req, (err, payload) => {
         const handler = getHandler(req.url);
-        handler(req, res, payload, (err, result) => {
+        handler(req, res, payload, (err, result, header) => {
             if (err) {
                 res.statusCode = err.code;
                 res.setHeader('Content-Type', 'application/json');
@@ -35,36 +46,44 @@ const server = http.createServer((req, res) => {
                 return;
             }
             res.statusCode = 200;
-            res.setHeader('Content-Type', 'application/json');
-            res.end(JSON.stringify(result));
-        });
-    });
+            if(header === 'application/json'){
+                changeArticles();
+                res.end(JSON.stringify(result));
+            }
+            else
+                res.end(result);
+        })
+    })
 });
 
-server.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
-});
+function parseBodyJson(req, cb) {
+    let body = [];
+    req.on('data', (chunk) => {
+        body.push(chunk);
+    }).on('end', () => {
+        body = Buffer.concat(body).toString();
+        let params;
+        if (body !== "") {
+            params = JSON.parse(body);
+        }
+        cb(null, params);
+    })
+}
+
+function changeArticles() {
+    const file = fs.createWriteStream('articles.json');
+    file.write(JSON.stringify(articles));
+}
 
 function getHandler(url) {
+    console.log(url);
     return handlers[url] || notFound;
 }
 
 function notFound(req, res, payload, cb) {
-    cb({ code: 404, message: 'Not found' });
+    cb({ code: 404, message: 'Not found'});
 }
 
-function parseBodyJson(req, cb) {
-    let body = [];
-    req.on('data', function (chunk) {
-        body.push(chunk);
-    }).on('end', function () {
-        body = Buffer.concat(body).toString();
-        if (body !== "") {
-            params = JSON.parse(body);
-            cb(null, params);
-        }
-        else {
-            cb(null, null);
-        }
-    });
-}
+server.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
+});

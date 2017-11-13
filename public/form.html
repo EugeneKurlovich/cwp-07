@@ -1,35 +1,20 @@
 <html>
-
-<head>
-    <title>Create</title>
-    <meta charset="utf-8">
-    <script src="jquery.min.js"></script>
-</head>
-
-<body>
-    <input type="text" id="Author">Author</input>
-    <br />
-    <input type="text" id="Title">Title</input>
-    <br />
-    <input type="text" id="Text">Text</input>
-    <br />
-    <input type="button" onclick="createNewArticle()" value='Add new article'></input>
-</body>
-<script>
-    function createNewArticle() {
-        let auth = document.getElementById('Author').value;
-        let titl = document.getElementById('Title').value;
-        let txt = document.getElementById('Text').value;
-        const dat = new Date().toString();
-        let articleId = 0;
-
-        let obj = JSON.stringify({id : articleId, author: auth, title: titl, text: txt, date: dat });
-        
-        $.post("/api/articles/create", obj, (data) => {
-            alert('Create successful');
-        });
-    }
-
-</script>
-
-</html>
+        <head>
+            <title>form</title>
+            <meta charset="utf-8">
+            <script src='form.js'></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>            
+        </head>
+        <body>
+            <script type='text/javascript'></script>
+            <div>
+                <label>Title</label>
+                <input type="text"  id="title" name="title">
+                <label>Text</label>
+                <input type="text"  id="text" name="title">
+                <label>Author</label>
+                <input type="text" id="author" name="title">
+                <input type="button" onclick="createArticle()" value="create article" class="btn">
+            </div>
+        </body>
+    </html>

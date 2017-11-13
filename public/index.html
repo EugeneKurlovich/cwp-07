@@ -1,62 +1,33 @@
 <html>
+    <head>
+        <title>Articles</title>
+        <meta charset="utf-8">
+        <script src='app.js'></script>
+    </head>
+    <body>
+        <script type='text/javascript'></script>
+        <div>
+            <nav style="margin-bottom: 10px">
+                <h2>Articles</h2>
+                <select id="field">
+                    <option id="id">id</option>
+                    <option id="text">text</option>
+                    <option id="title">title</option>
+                    <option id="date" selected>date</option>
+                    <option id="author">author</option>
+                </select>
+                <select  id="order">
+                    <option id="desc">desc</option>
+                    <option id="asc">asc</option>
+                </select>
+                
+            </nav>                    
+        </div>
+        <div id="articles">
 
-<head>
-    <title>Articles</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="site.css">
-    <script src="jquery.min.js"></script>
-</head>
+    </div>
+        <div id="pages">
 
-<body>
-    <label> Sort type</label>
-    <br />
-    <input type="radio" id='rad1' name='rad' value="1" checked>ASC</input>
-    <br />
-    <input type="radio" id='rad2' name='rad' value='2'>DESC</input>
-    <br />
-    <input type="submit" value="Get Articles" onclick="getelements(1)"></input>
-    <br />
-</body>
-
-
-<script>
-
-    let check = undefined;
-    function getelements(i) {
-        let str = `{"sortOrder":"desc","limit":5, "page":${i} }`;
-        if (!check) {
-            if (document.getElementById("rad1").checked == true) {
-                str = `{"sortOrder":"asc","limit":5, "page":${i}}`;
-                check = 'asc';
-            }
-            else check = 'desc';
-        }
-        else {
-            switch (check)
-            {
-                case 'asc' : str = `{"sortOrder":"asc","limit":5, "page":${i} }`;
-                case 'desc' : str = `{"sortOrder":"desc","limit":5, "page":${i} }`; 
-            }
-        }
-        let doc = document.getElementsByTagName('body')[0];
-        doc.innerHTML = '';
-        $.post('/api/articles/readAll', str, (data) => {
-            data.items.forEach((element) => {
-                doc.innerHTML += (`<div id='article'>` +
-                    `<div class='date'>   ${element.date}  </div>` +
-                    `<div class='title'>  ${element.title} </div>` +
-                    `<div class='text'>'  ${element.text}  </div>` +
-                    `<div class='author'>'${element.author} </div>` +
-                    `</div><br />`);
-            }, this);
-            let numb = parseInt(data.meta.pages);
-            for (let i = 1; i <= numb; ++i) {
-                doc.innerHTML += (`<input type="button" onclick='getelements(${i})' value='${i}'"></input>`);
-            }
-            console.log(doc.innerHTML);
-        });
-    }
-
-</script>
-
+        </div>
+    </body>
 </html>
