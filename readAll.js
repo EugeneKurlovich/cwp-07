@@ -67,7 +67,7 @@ module.exports.readAll = function readAll(req, res, payload, cb) {
         });
     }
     //pages block
-    let articlesResponse = {items : sortedArticles, meta : { page : 1, pages: 0, count: articles.length, limit: 3}};
+    let articlesResponse = {items : sortedArticles, meta : { page : 1, pages: 0, count: articles.length, limit: 5}};
     if(payload.page !== undefined){
         articlesResponse.meta.page = payload.page;
     }
